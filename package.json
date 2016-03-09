@@ -2,6 +2,10 @@
   "name": "generator-carbon-app",
   "version": "1.0.0",
   "description": "scaffold a basic carbon spa",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/themphill/generator-carbon-app.git"
+  },
   "files": [
     "generator/app"
   ],
