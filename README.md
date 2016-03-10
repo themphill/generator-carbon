@@ -1,2 +1,2 @@
-# generator-carbon-app
+# generator-carbon
 scaffold a basic carbon spa

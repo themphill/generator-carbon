@@ -1,10 +1,10 @@
 {
-  "name": "generator-carbon-app",
+  "name": "generator-carbon",
   "version": "1.0.0",
   "description": "scaffold a basic carbon spa",
   "repository": {
     "type": "git",
-    "url": "https://github.com/themphill/generator-carbon-app.git"
+    "url": "https://github.com/themphill/generator-carbon.git"
   },
   "files": [
     "generator/app"
@@ -17,6 +17,7 @@
   ],
   "author": "Tim Hemphill",
   "dependencies": {
+    "chalk": "^1.1.1",
     "yeoman-generator": "^0.22.5"
   }
 }
