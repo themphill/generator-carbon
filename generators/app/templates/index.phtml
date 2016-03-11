@@ -6,5 +6,19 @@
  */
 ?>
 
-<!-- Just something to know the page has loaded. Remove this. -->
-<h1> <%= appName %> </h1>
+<div id="app-main"></div>
+
+<script type="text/javascript">
+    var BootstrappedData = <?= $this->appData; ?>;
+
+<?php if ($this->activateDebug) { ?>
+    var Ibp = Ibp || {};
+    Ibp.Debug = true;
+<?php } ?>
+
+    if (typeof console === 'undefined' || typeof console.log === 'undefined') {
+        console = {
+            log: function () {}
+        };
+    }
+</script>

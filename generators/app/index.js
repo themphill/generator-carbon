@@ -1,79 +1,90 @@
-var generators = require('yeoman-generator');
-var chalk = require('chalk');
-var templates = [
-    {
-        src: 'Bootstrap.php',
-        dest: 'Bootstrap.php',
-        template: true
-    },
-    {
-        src: 'Gruntfile.js',
-        dest: 'Gruntfile.js',
-        template: false
-    },
-    {
-        src: 'package.json',
-        dest: 'package.json',
-        template: true
-    },
-    {
-        src: 'IndexController.php',
-        dest: 'controllers/IndexController.php',
-        template: true
-    },
-    {
-        src: 'index.phtml',
-        dest: 'views/scripts/index/index.phtml',
-        template: true
-    },
-    {
-        src: 'app.js',
-        dest: 'resources/js/app.js',
-        template: false
-    },
-    {
-        src: 'kissMetrics.js',
-        dest: 'resources/js/kissMetrics.js',
-        template: false
-    },
-    {
-        src: 'namespaces.js',
-        dest: 'resources/js/namespaces.js',
-        template: true
-    },
-    {
-        src: 'collection.js',
-        dest: 'resources/js/collections/collection.js',
-        template: true
-    },
-    {
-        src: 'model.js',
-        dest: 'resources/js/models/model.js',
-        template: true
-    },
-    {
-        src: 'router.js',
-        dest: 'resources/js/routers/router.js',
-        template: true
-    },
-    {
-        src: 'view.js',
-        dest: 'resources/js/views/view.js',
-        template: true
-    },
-    {
-        src: 'main.hbs',
-        dest: 'resources/js/templates/main.hbs',
-        template: true
-    },
-    {
-        src: 'main.less',
-        dest: 'resources/less/main.less',
-        template: false
-    }
-];
+var generators = require('yeoman-generator'),
+    chalk = require('chalk'),
+    templates = [
+        {
+            src: 'Bootstrap.php',
+            dest: 'Bootstrap.php',
+            template: true
+        },
+        {
+            src: 'Gruntfile.js',
+            dest: 'Gruntfile.js',
+            template: false
+        },
+        {
+            src: 'package.json',
+            dest: 'package.json',
+            template: true
+        },
+        {
+            src: 'IndexController.php',
+            dest: 'controllers/IndexController.php',
+            template: true
+        },
+        {
+            src: 'index.phtml',
+            dest: 'views/scripts/index/index.phtml',
+            template: true
+        },
+        {
+            src: 'app.js',
+            dest: 'resources/js/app.js',
+            template: true
+        },
+        {
+            src: 'kissMetrics.js',
+            dest: 'resources/js/kissMetrics.js',
+            template: false
+        },
+        {
+            src: 'namespaces.js',
+            dest: 'resources/js/namespaces.js',
+            template: true
+        },
+        {
+            src: 'collection.js',
+            dest: 'resources/js/collections/collection.js',
+            template: true
+        },
+        {
+            src: 'model.js',
+            dest: 'resources/js/models/model.js',
+            template: true
+        },
+        {
+            src: 'router.js',
+            dest: 'resources/js/routers/router.js',
+            template: true
+        },
+        {
+            src: 'main.js',
+            dest: 'resources/js/views/main.js',
+            template: true
+        },
+        {
+            src: 'main.hbs',
+            dest: 'resources/js/templates/main.hbs',
+            template: true
+        },
+        {
+            src: 'dashboard.js',
+            dest: 'resources/js/views/dashboard.js',
+            template: true
+        },
+        {
+            src: 'dashboard.hbs',
+            dest: 'resources/js/templates/dashboard.hbs',
+            template: true
+        },
+        {
+            src: 'main.less',
+            dest: 'resources/less/main.less',
+            template: false
+        }
+    ],
+    carbonGenerator;
 
-var CarbonGenerator = generators.Base.extend({
+carbonGenerator = generators.Base.extend({
     constructor: function () {
         generators.Base.apply(this, arguments);
 
@@ -105,39 +116,34 @@ var CarbonGenerator = generators.Base.extend({
             prompts = [{
                 type: 'input',
                 name: 'appName',
-                message: chalk.cyan('Enter the name of your application as you\'d like to see it displayed (e.g. Sourcetrak, IVR, etc.)'),
+                message: chalk.cyan('Enter the name of your application as you\'d like to see it displayed (e.g. Sourcetrak, LeadFlow, etc.)'),
                 default: 'MyApp'
             }];
 
-        this.prompt(prompts, function (responses) {
+        this.prompt(prompts, (responses) => {
             this.appName   = responses.appName;
             this.namespace = responses.appName.toLowerCase();
             this.appRoot   = 'application/modules/' + this.namespace + '/';
 
             done();
-        }.bind(this));
+        });
     },
-
-    // configuring: function () {
-    //     this.log('configuring');
-    // },
 
     writing: function () {
         templates.forEach((file) => {
             var fromPath = this.templatePath(file.src),
                 toPath   = this.destinationPath(this.appRoot + file.dest),
-                args     = [fromPath, toPath],
-                copyFn   = file.template ? this.fs.copyTpl : this.fs.copy,
                 data     = {
-                    appName:   this.appName,
+                    appName: this.appName,
                     namespace: this.namespace
                 };
 
             if (file.template) {
-                args.push(data);
+                this.fs.copyTpl(fromPath, toPath, data);
             }
-
-            copyFn.apply(this.fs, args);
+            else {
+                this.fs.copy(fromPath, toPath);
+            }
         });
     },
 
@@ -157,4 +163,4 @@ var CarbonGenerator = generators.Base.extend({
     }
 });
 
-module.exports = CarbonGenerator;
+module.exports = carbonGenerator;
