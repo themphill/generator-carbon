@@ -121,8 +121,11 @@ carbonGenerator = generators.Base.extend({
             }];
 
         this.prompt(prompts, (responses) => {
-            this.appName   = responses.appName;
-            this.namespace = responses.appName.toLowerCase();
+            var appName   = responses.appName.replace(/\s/g, ''),
+                namespace = responses.appName.replace(/\s/g, '-').toLowerCase();
+
+            this.appName   = appName;
+            this.namespace = namespace;
             this.appRoot   = 'application/modules/' + this.namespace + '/';
 
             done();
