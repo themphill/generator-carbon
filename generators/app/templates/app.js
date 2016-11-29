@@ -32,5 +32,5 @@
 
     // Enable routing
     Ibp.<%= appName %>.Router = new Ibp.<%= appName %>.Routers.Main({});
-    Backbone.history.start({root: '/sourcetrak'});
+    Backbone.history.start({root: '<%= namespace %>'});
 })();
