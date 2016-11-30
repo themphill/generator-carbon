@@ -1,7 +1,7 @@
 <?php
 require_once 'generic.functions.web.include.php';
 
-class <%= namespace %>_IndexController extends Zend_Controller_Action
+class <%= appName %>_IndexController extends Zend_Controller_Action
 {
     private $curlClient = null;
 
